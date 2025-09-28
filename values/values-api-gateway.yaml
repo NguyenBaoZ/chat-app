@@ -1,0 +1,41 @@
+replicaCount: 2
+
+image:
+  repository: docker.io/chat-app/api-gateway
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  containerPort: 8080
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
+  - name: AUTH_SERVICE_URL
+    value: http://auth-service:8080
+  - name: USER_SERVICE_URL
+    value: http://user-service:8081
+  - name: MESSAGE_SERVICE_URL
+    value: http://message-service:8083
+  - name: REALTIME_GATEWAY_URL
+    value: http://realtime-gateway:4000
+
+ingress:
+  enabled: true
+  host: api.chat-app.local
+
+livenessProbe:
+  enabled: true
+  path: /actuator/health
+  port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 15
+
+readinessProbe:
+  enabled: true
+  path: /actuator/health
+  port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5

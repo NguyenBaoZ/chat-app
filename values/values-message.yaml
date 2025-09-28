@@ -1,0 +1,39 @@
+replicaCount: 3
+
+image:
+  repository: docker.io/chat-app/message-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8083
+  containerPort: 8080
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
+  - name: MONGO_URI
+    value: mongodb://mongo:27017/chat_app
+  - name: KAFKA_BROKER
+    value: kafka:9092
+  - name: REDIS_HOST
+    value: redis
+
+ingress:
+  enabled: true
+  host: message.chat-app.local
+
+livenessProbe:
+  enabled: true
+  path: /actuator/health
+  port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 15
+
+readinessProbe:
+  enabled: true
+  path: /actuator/health
+  port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5

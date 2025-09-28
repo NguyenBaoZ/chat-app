@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/chat-app/statistic-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8085
+  containerPort: 8080
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
+  - name: MONGO_URI
+    value: mongodb://mongo:27017/chat_app
+  - name: ELASTICSEARCH_URL
+    value: http://elasticsearch:9200
+
+ingress:
+  enabled: false
