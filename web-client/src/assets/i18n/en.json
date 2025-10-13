@@ -1,0 +1,11 @@
+{
+    "login": {
+        "welcome": "Welcome!",
+        "title": "Login to your account",
+        "username": "Username",
+        "password": "Password",
+        "forgotPassword": "Forgot my password",
+        "loginButton": "Log In",
+        "invalidCredentials": "Invalid username or password."
+    }
+}

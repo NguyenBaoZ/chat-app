@@ -1,0 +1,24 @@
+<div class="contact-list-container">
+  <mat-toolbar color="primary">
+    <span>Contacts ({{ contacts.length }})</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="searchContacts()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button (click)="addNewContact()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-list class="contact-list">
+    <app-contact-item
+      *ngFor="let contact of contacts" 
+      [contact]="contact"
+      [isSelected]="selectedContact?.id === contact.id"
+      (contactSelected)="onContactSelected($event)"
+      (menuClicked)="onMenuClicked($event)"
+      (editContact)="onEditContact($event)"
+      (deleteContact)="onDeleteContact($event)">
+    </app-contact-item>
+  </mat-list>
+</div>

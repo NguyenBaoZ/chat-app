@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('./../../../../assets/background/login-blue-bgr.jpg');
+
+    .login-container {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .login-card {
+        padding: 0;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,9 @@
+:host {
+    display: flex;
+    min-height: 100vh;
+    min-width: 100vw;
+
+    .contact-list-wrapper {
+        width: 20vw;
+    }
+}

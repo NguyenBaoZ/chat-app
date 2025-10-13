@@ -1,0 +1,102 @@
+:host {
+    .login-header {
+        text-align: center;
+        padding: 32px 24px 16px;
+        margin-bottom: 16px;
+        justify-content: center;
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+    }
+
+    .login-form {
+        padding: 0 24px 24px;
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+
+            .forgot-password-link {
+                color: #3f51b5;
+                text-decoration: none;
+                cursor: pointer;
+                font-size: 14px;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+
+
+        .login-button {
+            height: 48px;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 24px;
+
+            .button-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+        }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: #e0e0e0;
+            }
+
+            span {
+                position: relative;
+                background: #f4f3f6;
+                padding: 0 16px;
+                color: #666;
+                font-size: 14px;
+            }
+        }
+
+        .additional-options {
+            text-align: center;
+
+            p {
+                color: #666;
+                margin: 0;
+            }
+
+            .signup-link {
+                color: #3f51b5;
+                text-decoration: none;
+                cursor: pointer;
+                font-weight: 500;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    
+    .full-width {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}
