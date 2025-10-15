@@ -1,0 +1,33 @@
+<div class="main-section-wrapper" [class.own-message]="isOwnMessage">
+    <div class="chat-bubble">
+        <div class="message-content">
+            <div class="message-text">{{ message.text }}</div>
+        </div>
+    </div>
+    <div class="button-group-wrapper">
+        <button *ngIf="isOwnMessage" mat-icon-button class="delete-btn" matTooltip="Delete Message"
+            (click)="delete.emit(message.id)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div class="message-actions" [class.own-message]="isOwnMessage">
+    <div *ngIf="message.reactions?.length" class="reactions">
+        <span *ngFor="let reaction of message.reactions" class="reaction">
+            {{ reaction }}
+        </span>
+    </div>
+    <button mat-icon-button class="react-btn" matTooltip="Add Reaction" (click)="react.emit('👍')">
+        <mat-icon>add_reaction</mat-icon>
+    </button>
+</div>
+
+<div class="message-status" [class.own-message]="isOwnMessage">
+    <mat-icon [color]="getStatusColor(message.status)" class="status-icon">
+        {{ getStatusIcon(message.status) }}
+    </mat-icon>
+    <span class="timestamp">
+        {{ message.timestamp | date:'shortTime' }}
+    </span>
+</div>

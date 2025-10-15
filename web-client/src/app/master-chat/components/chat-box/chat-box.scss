@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: stretch;
+
+    .conversation-window-wrapper {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .message-input-wrapper {
+        flex: 0 0 auto;
+        border-top: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        padding: 10px;
+        background-color: #fafafa;
+    }
+}

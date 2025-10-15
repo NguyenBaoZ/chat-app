@@ -1,0 +1,9 @@
+<div class="message-input-container">
+    <!-- 1.1.1 Header Toolbar -->
+    <app-header-toolbar (imageSelected)="onImageSelected($event)" (fileSelected)="onFileSelected($event)">
+    </app-header-toolbar>
+
+    <!-- 1.1.2 Main Input -->
+    <app-main-input (sendMessage)="onMessageSent($event)">
+    </app-main-input>
+</div>

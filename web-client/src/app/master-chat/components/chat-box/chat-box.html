@@ -1,1 +1,11 @@
-<p>chat-box works!</p>
+<div class="box-header-wrapper">
+    <app-box-header></app-box-header>
+</div>
+<div class="conversation-window-wrapper">
+    <app-conversation-window [messages]="messages" [currentUserId]="currentUserId"
+        (messageDeleted)="messageDeleted.emit($event)"
+        (reactionAdded)="reactionAdded.emit($event)"></app-conversation-window>
+</div>
+<div class="message-input-wrapper">
+    <app-message-input (messageSent)="onMessageSent($event)"></app-message-input>
+</div>

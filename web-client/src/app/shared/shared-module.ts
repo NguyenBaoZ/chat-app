@@ -11,7 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListItem, MatListModule } from '@angular/material/list';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TranslateModule.forChild({
       extend: true
     }),
+    FormsModule,
 
     // Angular Material
     MatCardModule,
@@ -40,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
+    FormsModule,
 
     // Angular Material
     MatCardModule,
