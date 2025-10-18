@@ -1,0 +1,37 @@
+<div class="main-input">
+    <!-- Emoji Picker -->
+    <div *ngIf="showEmojiPicker" class="emoji-picker">
+        <div class="emoji-picker-header">
+            <span class="emoji-title">Choose an emoji</span>
+            <button mat-icon-button class="close-emoji-btn" (click)="showEmojiPicker = false">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="emoji-grid">
+            <button *ngFor="let emoji of availableEmojis" mat-icon-button class="emoji-btn" (click)="addEmoji(emoji)">
+                <span class="emoji">{{ emoji }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Input Container -->
+    <div class="input-container">
+        <mat-form-field appearance="outline" class="message-input-field">
+            <textarea matInput #messageTextarea [(ngModel)]="message" (ngModelChange)="onMessageChange($event)"
+                (keydown)="onKeyPress($event)" placeholder="Type a message..." class="message-textarea" rows="1"
+                cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+        </mat-form-field>
+
+        <div class="buttons">
+            <button mat-icon-button class="emoji-toggle-btn" matTooltip="Insert Emoji"
+                [color]="showEmojiPicker ? 'primary' : ''" (click)="toggleEmojiPicker()">
+                <mat-icon>mood</mat-icon>
+            </button>
+
+            <button mat-icon-button class="send-btn" [disabled]="!message.trim()" (click)="onSendMessage()"
+                matTooltip="Send message">
+                <mat-icon>send</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

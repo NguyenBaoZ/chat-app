@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import * as en from '../assets/i18n/en.json'
+import * as en from '../assets/i18n/en.json';
+import { StoreModule } from '@ngrx/store'
 
 @Component({
   selector: 'app-root',

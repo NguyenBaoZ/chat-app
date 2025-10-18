@@ -6,6 +6,12 @@ import { MasterChatRoutingModule } from './master-chat-routing.module';
 import { ContactList } from './components/contact-list/contact-list';
 import { ContactItem } from './components/contact-list/contact-item/contact-item';
 import { DefaultWelcome } from './components/default-welcome/default-welcome';
+import { ConversationWindow } from './components/chat-box/conversation-window/conversation-window';
+import { MessageInput } from './components/chat-box/message-input/message-input';
+import { ChatBubble } from './components/chat-box/conversation-window/chat-bubble/chat-bubble';
+import { HeaderToolbar } from './components/chat-box/message-input/header-toolbar/header-toolbar';
+import { MainInput } from './components/chat-box/message-input/main-input/main-input';
+import { BoxHeader } from './components/chat-box/box-header/box-header';
 
 @NgModule({
   declarations: [
@@ -13,15 +19,30 @@ import { DefaultWelcome } from './components/default-welcome/default-welcome';
     ChatBox,
     ContactList,
     ContactItem,
-    DefaultWelcome
+    DefaultWelcome,
+    ConversationWindow,
+    MessageInput,
+    ChatBubble,
+    HeaderToolbar,
+    MainInput,
+    BoxHeader
   ],
   imports: [
     SharedModule,
     MasterChatRoutingModule
   ],
-  exports: [ 
+  exports: [
     MasterChatOutlet,
-    ChatBox
+    ChatBox,
+    ContactList,
+    ContactItem,
+    DefaultWelcome,
+    ConversationWindow,
+    MessageInput,
+    ChatBubble,
+    HeaderToolbar,
+    MainInput,
+    BoxHeader
   ]
 })
 export class MasterChatModule { }
