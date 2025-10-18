@@ -1,0 +1,11 @@
+﻿server:
+  port: 8087
+
+spring:
+  application:
+    name: realtime-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka
