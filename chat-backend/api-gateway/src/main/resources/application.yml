@@ -1,0 +1,111 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true        
+          lower-case-service-id: true
+
+      routes:
+        # # Auth Service
+        # - id: auth-service
+        #   uri: lb://auth-service
+        #   predicates:
+        #     - Path=/api/auth/**
+        #   filters:
+        #     - StripPrefix=1
+
+        # User Service
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
+
+        # Group Service
+        # - id: group-service
+        #   uri: lb://group-service
+        #   predicates:
+        #     - Path=/api/groups/**
+        #   filters:
+        #     - StripPrefix=1
+
+        # # Message Service
+        # - id: message-service
+        #   uri: lb://message-service
+        #   predicates:
+        #     - Path=/api/messages/**
+        #   filters:
+        #     - StripPrefix=1
+
+        # # File Service
+        # - id: file-service
+        #   uri: lb://file-service
+        #   predicates:
+        #     - Path=/api/files/**
+        #   filters:
+        #     - StripPrefix=1
+
+        # # Notification Service
+        # - id: notification-service
+        #   uri: lb://notification-service
+        #   predicates:
+        #     - Path=/api/notifications/**
+        #   filters:
+        #     - StripPrefix=1
+
+        # # Statistic Service
+        # - id: statistic-service
+        #   uri: lb://statistic-service
+        #   predicates:
+        #     - Path=/api/statistics/**
+        #   filters:
+        #     - StripPrefix=1
+
+        # # Realtime Gateway
+        # - id: realtime-gateway
+        #   uri: lb://realtime-gateway
+        #   predicates:
+        #     - Path=/api/realtime/**
+        #   filters:
+        #     - StripPrefix=1
+
+  main:
+    web-application-type: reactive
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    urls:
+      # - name: Auth Service
+      #   url: /auth-service/v3/api-docs
+      # - name: Message Service
+      #   url: /message-service/v3/api-docs
+      # - name: Group Service
+      #   url: /group-service/v3/api-docs
+      # - name: File Service
+      #   url: /file-service/v3/api-docs
+      # - name: Notification Service
+      #   url: /notification-service/v3/api-docs
+      # - name: Statistic Service
+      #   url: /statistic-service/v3/api-docs
+      - name: user-service
+        url: /user-service/v3/api-docs
+    path: /swagger-ui.html
