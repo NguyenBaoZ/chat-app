@@ -33,7 +33,3 @@
 - Maven
 - Node.js (>=18)
 - Angular CLI
-
-### Run locally
-```bash
-docker-compose up -d

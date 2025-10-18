@@ -1,0 +1,199 @@
+﻿version: "3.8"
+
+services:
+  discovery-service:
+    image: chat-discovery-service
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    container_name: discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8761:8761"
+    networks:
+      - chat-network
+
+  api-gateway:
+    image: chat-api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  auth-service:
+    image: chat-auth-service
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_auth?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  user-service:
+    image: chat-user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_user?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  message-service:
+    image: chat-message-service
+    build:
+      context: ./message-service
+      dockerfile: Dockerfile
+    container_name: message-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_message?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  group-service:
+    image: chat-group-service
+    build:
+      context: ./group-service
+      dockerfile: Dockerfile
+    container_name: group-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_group?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  file-service:
+    image: chat-file-service
+    build:
+      context: ./file-service
+      dockerfile: Dockerfile
+    container_name: file-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_file?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  notification-service:
+    image: chat-notification-service
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    container_name: notification-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_notification?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  realtime-gateway:
+    image: chat-realtime-gateway
+    build:
+      context: ./realtime-gateway
+      dockerfile: Dockerfile
+    container_name: realtime-gateway
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8087:8087"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  statistic-service:
+    image: chat-statistic-service
+    build:
+      context: ./statistic-service
+      dockerfile: Dockerfile
+    container_name: statistic-service
+    depends_on:
+      - discovery-service
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/chat_statistic?retryWrites=true&w=majority
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+    networks:
+      - chat-network
+
+  mongo:
+    image: mongo:7.0
+    container_name: mongo
+    mem_limit: 512m
+    cpus: 0.5
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 1password123
+    volumes:
+      - mongo_data:/data/db
+      - ./chat-mongo-init:/docker-entrypoint-initdb.d
+    networks:
+      - chat-network
+
+networks:
+  chat-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local

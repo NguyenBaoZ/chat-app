@@ -1,0 +1,16 @@
+- Need to check:
+    - Docker Desktop
+    - JDK = 23 
+    - Maven: 
+        how to install:
+            - Open power shell
+            - Run this line: Set-ExecutionPolicy Bypass -Scope Process -Force; `
+[System.Net.ServicePointManager]::SecurityProtocol = `
+[System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+            - choco install maven -y 
+            - mvn -v
+    - Node.js
+    - MongoDB (link connect mongosh "mongodb+srv://cluster0.aodaufp.mongodb.net/" --apiVersion 1 --username admin --password 1password123)
+
+{"_id":{"$oid":"68f0f5a204150180adcebea4"},"username":"admin","email":"admin@example.com","password":"123","displayName":"Admin","avatarUrl":""}
