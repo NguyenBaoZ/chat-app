@@ -1,0 +1,17 @@
+﻿server:
+  port: 8088
+
+spring:
+  application:
+    name: statistic-service
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:1password123@cluster0.aodaufp.mongodb.net/
+      database: chat_statistic
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
