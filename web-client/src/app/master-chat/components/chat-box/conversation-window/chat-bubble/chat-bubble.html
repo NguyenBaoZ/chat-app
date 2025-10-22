@@ -13,12 +13,13 @@
 </div>
 
 <div class="message-actions" [class.own-message]="isOwnMessage">
-    <div *ngIf="message.reactions?.length" class="reactions">
-        <span *ngFor="let reaction of message.reactions" class="reaction">
-            {{ reaction }}
-        </span>
-    </div>
-    <button mat-icon-button class="react-btn" matTooltip="Add Reaction" (click)="react.emit('👍')">
+
+    <span *ngIf="!!reaction" class="reaction">
+        {{ reaction }}
+    </span>
+
+    <button *ngIf="!isOwnMessage" mat-icon-button class="react-btn" matTooltip="Add Reaction"
+        (click)="toggleEmojiPicker()">
         <mat-icon>add_reaction</mat-icon>
     </button>
 </div>
@@ -30,4 +31,9 @@
     <span class="timestamp">
         {{ message.timestamp | date:'shortTime' }}
     </span>
+</div>
+
+<div class="emoji-picker">
+    <app-emoji-picker [reactionOnly]="true" (emojiSelected)="addEmoji($event)"
+        (closed)="onEmojiPickerClosed()"></app-emoji-picker>
 </div>

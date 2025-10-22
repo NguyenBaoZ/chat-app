@@ -8,7 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListItem, MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,7 +37,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatToolbarModule,
     MatListModule,
-    // MatListItem
+    MatMenuModule,
+    MatMenuTrigger,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -53,7 +57,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatToolbarModule,
     MatListModule,
-    // MatListItem
+    MatMenuModule,
+    MatMenuTrigger,
+    MatTooltipModule
   ]
 })
 export class SharedModule { }

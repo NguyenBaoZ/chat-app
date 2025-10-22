@@ -4,5 +4,5 @@ export interface ChatMessage {
   timestamp: Date;
   status: 'sending' | 'sent' | 'seen' | 'error';
   isOwnMessage: boolean;
-  reactions?: string[];
+  reaction?: string;
 }

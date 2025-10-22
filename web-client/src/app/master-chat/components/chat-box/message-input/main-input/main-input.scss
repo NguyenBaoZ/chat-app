@@ -2,59 +2,12 @@
     .main-input {
         border-top: 1px solid #e0e0e0;
         background: white;
+        position: relative;
 
         .emoji-picker {
-            border-bottom: 1px solid #e0e0e0;
-            background: #f8f9fa;
-            padding: 8px 16px;
-            animation: slideDown 0.2s ease-out;
-
-            .emoji-picker-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 8px;
-
-                .emoji-title {
-                    font-size: 12px;
-                    font-weight: 500;
-                    color: #666;
-                }
-
-                .close-emoji-btn {
-                    width: 24px;
-                    height: 24px;
-                    line-height: 24px;
-
-                    mat-icon {
-                        font-size: 16px;
-                        width: 16px;
-                        height: 16px;
-                        line-height: 16px;
-                    }
-                }
-            }
-        }
-
-        .emoji-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 4px;
-
-            .emoji-btn {
-                width: 32px;
-                height: 32px;
-                border-radius: 8px;
-                transition: background-color 0.2s ease;
-
-                &:hover {
-                    background: rgba(0, 0, 0, 0.1);
-                }
-
-                .emoji {
-                    font-size: 18px;
-                }
-            }
+            position: absolute;
+            bottom: calc(100% - 50px);
+            right: 50px;
         }
 
         .input-container {
@@ -185,17 +138,5 @@
         .emoji-grid {
             grid-template-columns: repeat(4, 1fr);
         }
-    }
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 }

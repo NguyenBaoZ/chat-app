@@ -1,0 +1,15 @@
+<button mat-icon-button [matMenuTriggerFor]="emojiMenu" aria-label="Open emoji picker" class="trigger">
+  <mat-icon>emoji_emotions</mat-icon>
+</button>
+
+<mat-menu #emojiMenu="matMenu" class="emoji-picker-menu" (menuOpened)="onMenuOpened()" (closed)="onMenuClosed()">
+    <div class="emoji-picker-container">
+        <!-- Emoji Grid -->
+        <div class="emoji-grid">
+            <button *ngFor="let emojiObj of emojiList" mat-icon-button (click)="selectEmoji(emojiObj)"
+                class="emoji-btn" [attr.aria-label]="emojiObj.altText" [matTooltip]="emojiObj.altText">
+                {{ emojiObj.emoji }}
+            </button>
+        </div>
+    </div>
+</mat-menu>

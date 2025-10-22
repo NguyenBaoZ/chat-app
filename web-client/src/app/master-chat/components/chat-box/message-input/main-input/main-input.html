@@ -1,17 +1,7 @@
 <div class="main-input">
     <!-- Emoji Picker -->
-    <div *ngIf="showEmojiPicker" class="emoji-picker">
-        <div class="emoji-picker-header">
-            <span class="emoji-title">Choose an emoji</span>
-            <button mat-icon-button class="close-emoji-btn" (click)="showEmojiPicker = false">
-                <mat-icon>close</mat-icon>
-            </button>
-        </div>
-        <div class="emoji-grid">
-            <button *ngFor="let emoji of availableEmojis" mat-icon-button class="emoji-btn" (click)="addEmoji(emoji)">
-                <span class="emoji">{{ emoji }}</span>
-            </button>
-        </div>
+    <div class="emoji-picker">
+        <app-emoji-picker [reactionOnly]="false" (emojiSelected)="addEmoji($event)" (closed)="onEmojiPickerClosed()"></app-emoji-picker>
     </div>
 
     <!-- Input Container -->
