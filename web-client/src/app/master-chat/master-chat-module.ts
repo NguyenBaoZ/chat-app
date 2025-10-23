@@ -12,6 +12,7 @@ import { ChatBubble } from './components/chat-box/conversation-window/chat-bubbl
 import { HeaderToolbar } from './components/chat-box/message-input/header-toolbar/header-toolbar';
 import { MainInput } from './components/chat-box/message-input/main-input/main-input';
 import { BoxHeader } from './components/chat-box/box-header/box-header';
+import { EmojiPicker } from './components/chat-box/emoji-picker/emoji-picker';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BoxHeader } from './components/chat-box/box-header/box-header';
     ChatBubble,
     HeaderToolbar,
     MainInput,
-    BoxHeader
+    BoxHeader,
+    EmojiPicker
   ],
   imports: [
     SharedModule,
@@ -42,7 +44,8 @@ import { BoxHeader } from './components/chat-box/box-header/box-header';
     ChatBubble,
     HeaderToolbar,
     MainInput,
-    BoxHeader
+    BoxHeader,
+    EmojiPicker
   ]
 })
 export class MasterChatModule { }

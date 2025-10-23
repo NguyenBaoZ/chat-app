@@ -106,6 +106,12 @@
         }
     }
 
+    .emoji-picker {
+        position: absolute;
+        bottom: calc(100% - 50px);
+        right: 50px;
+    }
+
     .message-status {
         display: flex;
         align-items: center;

@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Emoji } from '../../../../models/emoji.model';
+import { EmojiPicker } from '../../emoji-picker/emoji-picker';
 
 @Component({
   selector: 'app-main-input',
@@ -7,6 +9,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Outp
   styleUrl: './main-input.scss'
 })
 export class MainInput implements OnInit, AfterViewInit {
+  @ViewChild(EmojiPicker) emojiPicker!: EmojiPicker;
   @Input() message: string = '';
   @Output() messageChange = new EventEmitter<string>();
   @Output() sendMessage = new EventEmitter<string>();
@@ -14,13 +17,13 @@ export class MainInput implements OnInit, AfterViewInit {
   @ViewChild('messageTextarea') textarea!: ElementRef<HTMLTextAreaElement>;
 
   showEmojiPicker = false;
-  availableEmojis = ['😀', '😂', '❤️', '👍', '🎉', '🔥'];
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
     this.autoResize();
+    this.emojiPicker?.closeMenu();
   }
 
   onMessageChange(value: string) {
@@ -38,9 +41,29 @@ export class MainInput implements OnInit, AfterViewInit {
     }
   }
 
-  addEmoji(emoji: string) {
-    this.onMessageChange(this.message + emoji);
+  addEmoji(emoji: Emoji) {
+    this.insertEmojiInTextarea(emoji.emoji);
     this.focusTextarea();
+  }
+
+  private insertEmojiInTextarea(emoji: string): void {
+    const textarea = this.textarea.nativeElement;
+
+    const cursorPosition = textarea.selectionStart !== null ? textarea.selectionStart : this.message.length;
+
+    const textBeforeCursor = this.message.substring(0, cursorPosition);
+    const textAfterCursor = this.message.substring(cursorPosition);
+
+    this.message = textBeforeCursor + emoji + textAfterCursor;
+
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPosition = cursorPosition + emoji.length;
+      textarea.setSelectionRange(newCursorPosition, newCursorPosition);
+    });
+
+    this.messageChange.emit(this.message);
+    this.autoResize();
   }
 
   onKeyPress(event: KeyboardEvent) {
@@ -71,9 +94,18 @@ export class MainInput implements OnInit, AfterViewInit {
   }
 
   toggleEmojiPicker() {
-    this.showEmojiPicker = !this.showEmojiPicker;
-    if (!this.showEmojiPicker) {
-      this.focusTextarea();
+    if (this.showEmojiPicker) {
+      this.showEmojiPicker = false;
+      this.emojiPicker?.closeMenu();
     }
+    else {
+      this.showEmojiPicker = true;
+
+      this.emojiPicker?.openMenu();
+    }
+  }
+
+  onEmojiPickerClosed() {
+    this.showEmojiPicker = false;
   }
 }
