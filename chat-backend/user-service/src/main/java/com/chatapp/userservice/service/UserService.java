@@ -7,9 +7,9 @@ import com.chatapp.userservice.dto.FriendRequestDto;
 import java.util.List;
 
 public interface UserService {
-    UserDto getUserById(String id);
+    UserDto getUserByUserId(String userId);
     List<ContactDto> getContacts(String userId);
     List<FriendRequestDto> getFriendRequests(String userId);
     void addContact(String ownerId, String friendId, String nickname);
-    void sendFriendRequest(String fromUser, String toUser);
+    void sendFriendRequest(String fromUserId, String toUserId);
 }

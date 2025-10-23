@@ -3,7 +3,7 @@ package com.chatapp.userservice.dto;
 import java.util.Date;
 
 public class UserDto {
-    private String id;
+    private String userId;
     private String username;
     private String displayName;
     private String email;
@@ -14,9 +14,9 @@ public class UserDto {
 
     public UserDto() {}
 
-    public UserDto(String id, String username, String displayName, String email,
+    public UserDto(String userId, String username, String displayName, String email,
                    String avatar, String status, String bio, Date createdAt) {
-        this.id = id;
+        this.userId = userId;
         this.username = username;
         this.displayName = displayName;
         this.email = email;
@@ -26,8 +26,8 @@ public class UserDto {
         this.createdAt = createdAt;
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }

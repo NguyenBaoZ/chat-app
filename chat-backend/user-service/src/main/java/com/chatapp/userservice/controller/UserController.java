@@ -21,10 +21,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable String id) {
-        UserDto dto = userService.getUserById(id);
-        if (dto == null) throw new ResourceNotFoundException("User not found: " + id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
+        UserDto dto = userService.getUserByUserId(userId);
+        if (dto == null) {
+            throw new ResourceNotFoundException("User not found: " + userId);
+        }
         return ResponseEntity.ok(dto);
     }
 

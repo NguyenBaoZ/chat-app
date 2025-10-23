@@ -15,9 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class User {
 
-    @Id
-    private String id;                   
     @Indexed(unique = true)
+    private String userId;                   
+    
     private String username;             
 
     private String displayName;          
@@ -35,11 +35,11 @@ public class User {
     private Date updatedAt;           
 
     // getters and setters
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
     public String getUsername() {
         return username;

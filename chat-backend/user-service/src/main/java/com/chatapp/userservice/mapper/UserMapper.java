@@ -10,7 +10,7 @@ public class UserMapper {
     public UserDto toDto(User user) {
         if (user == null) return null;
         return new UserDto(
-                user.getId(),
+                user.getUserId(),
                 user.getUsername(),
                 user.getDisplayName(),
                 user.getEmail(),
@@ -24,7 +24,7 @@ public class UserMapper {
     public User toEntity(UserDto dto) {
         if (dto == null) return null;
         User user = new User();
-        user.setId(dto.getId());
+        user.setUserId(dto.getUserId());
         user.setUsername(dto.getUsername());
         user.setDisplayName(dto.getDisplayName());
         user.setEmail(dto.getEmail());

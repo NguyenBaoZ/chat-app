@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(String id) {
-        User user = userRepository.findById(id)
+    public UserDto getUserByUserId(String userId) {
+        User user = userRepository.findByUserIdCustom(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return new UserDto(
-                user.getId(),
+                user.getUserId(),
                 user.getUsername(),
                 user.getDisplayName(),
                 user.getEmail(),
