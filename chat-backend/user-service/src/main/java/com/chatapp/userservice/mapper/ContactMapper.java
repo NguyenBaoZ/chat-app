@@ -10,7 +10,7 @@ public class ContactMapper {
     public ContactDto toDto(Contact contact) {
         if (contact == null) return null;
         return new ContactDto(
-                contact.getId(),
+                contact.getContactId(),
                 contact.getOwnerId(),
                 contact.getFriendId(),
                 contact.getNickname(),
@@ -21,7 +21,7 @@ public class ContactMapper {
     public Contact toEntity(ContactDto dto) {
         if (dto == null) return null;
         Contact contact = new Contact();
-        contact.setId(dto.getId());
+        contact.setContactId(dto.getContactId());
         contact.setOwnerId(dto.getOwnerId());
         contact.setFriendId(dto.getFriendId());
         contact.setNickname(dto.getNickname());

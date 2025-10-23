@@ -17,7 +17,8 @@ public class UserMapper {
                 user.getAvatar(),
                 user.getStatus(),
                 user.getBio(),
-                user.getCreatedAt()
+                user.getCreatedAt(),
+                user.getLastActiveAt()
         );
     }
 
@@ -32,6 +33,7 @@ public class UserMapper {
         user.setStatus(dto.getStatus());
         user.setBio(dto.getBio());
         user.setCreatedAt(dto.getCreatedAt());
+        user.setLastActiveAt(dto.getLastActiveAt());
         return user;
     }
 }

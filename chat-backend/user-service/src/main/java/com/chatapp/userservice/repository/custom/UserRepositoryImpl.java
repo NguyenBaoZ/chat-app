@@ -34,6 +34,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         user.setEmail(doc.getString("email"));
         user.setStatus(doc.getString("status"));
         user.setBio(doc.getString("bio"));
+        user.setAvatar(doc.getString("avatar"));
+        user.setCreatedAt(doc.getDate("createdAt"));
+        user.setLastActiveAt(doc.getDate("lastActiveAt"));
         return Optional.of(user);
     }
 }

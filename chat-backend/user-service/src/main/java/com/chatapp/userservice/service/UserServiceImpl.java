@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService {
                 user.getAvatar(),
                 user.getStatus(),
                 user.getBio(),
-                user.getCreatedAt()
+                user.getCreatedAt(),
+                user.getLastActiveAt()
         );
     }
 
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
         return contactRepository.findByOwnerId(userId)
                 .stream()
                 .map(c -> new ContactDto(
-                        c.getId(),
+                        c.getContactId(),
                         c.getOwnerId(),
                         c.getFriendId(),
                         c.getNickname(),

@@ -11,11 +11,12 @@ public class UserDto {
     private String status;
     private String bio;
     private Date createdAt;
+    private Date lastActiveAt;
 
     public UserDto() {}
 
     public UserDto(String userId, String username, String displayName, String email,
-                   String avatar, String status, String bio, Date createdAt) {
+                   String avatar, String status, String bio, Date createdAt, Date lastActiveAt) {
         this.userId = userId;
         this.username = username;
         this.displayName = displayName;
@@ -24,6 +25,7 @@ public class UserDto {
         this.status = status;
         this.bio = bio;
         this.createdAt = createdAt;
+        this.lastActiveAt = lastActiveAt;
     }
 
     public String getUserId() { return userId; }
@@ -49,4 +51,7 @@ public class UserDto {
 
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    public Date getLastActiveAt() { return lastActiveAt; }
+    public void setLastActiveAt(Date lastActiveAt) { this.lastActiveAt = lastActiveAt; }
 }

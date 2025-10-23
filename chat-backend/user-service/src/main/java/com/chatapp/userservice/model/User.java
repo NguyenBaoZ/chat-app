@@ -3,7 +3,6 @@ package com.chatapp.userservice.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -32,7 +31,7 @@ public class User {
 
     private Date createdAt;              
 
-    private Date updatedAt;           
+    private Date lastActiveAt;           
 
     // getters and setters
     public String getUserId() {
@@ -83,10 +82,10 @@ public class User {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Date getLastActiveAt() {
+        return lastActiveAt;
     }
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setLastActiveAt(Date lastActiveAt) {
+        this.lastActiveAt = lastActiveAt;
     }
 }

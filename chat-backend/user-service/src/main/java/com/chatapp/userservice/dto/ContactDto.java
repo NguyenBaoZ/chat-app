@@ -1,7 +1,7 @@
 package com.chatapp.userservice.dto;
 
 public class ContactDto {
-    private String id;
+    private String contactId;
     private String ownerId;
     private String friendId;
     private String nickname;
@@ -9,8 +9,8 @@ public class ContactDto {
 
     public ContactDto() {}
 
-    public ContactDto(String id, String ownerId, String friendId, String nickname, String status) {
-        this.id = id;
+    public ContactDto(String contactId, String ownerId, String friendId, String nickname, String status) {
+        this.contactId = contactId;
         this.ownerId = ownerId;
         this.friendId = friendId;
         this.nickname = nickname;
@@ -18,8 +18,8 @@ public class ContactDto {
     }
 
     // Getters và Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getContactId() { return contactId; }
+    public void setContactId(String contactId) { this.contactId = contactId; }
 
     public String getOwnerId() { return ownerId; }
     public void setOwnerId(String ownerId) { this.ownerId = ownerId; }

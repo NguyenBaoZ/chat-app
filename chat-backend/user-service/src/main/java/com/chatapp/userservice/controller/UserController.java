@@ -5,7 +5,6 @@ import com.chatapp.userservice.dto.ContactDto;
 import com.chatapp.userservice.dto.FriendRequestDto;
 import com.chatapp.userservice.exception.ResourceNotFoundException;
 import com.chatapp.userservice.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,30 +29,30 @@ public class UserController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/{id}/contacts")
-    public ResponseEntity<List<ContactDto>> getContacts(@PathVariable String id) {
-        List<ContactDto> contacts = userService.getContacts(id);
+    @GetMapping("/{userId}/contacts")
+    public ResponseEntity<List<ContactDto>> getContacts(@PathVariable String userId) {
+        List<ContactDto> contacts = userService.getContacts(userId);
         return ResponseEntity.ok(contacts);
     }
 
-    @GetMapping("/{id}/friend-requests")
-    public ResponseEntity<List<FriendRequestDto>> getFriendRequests(@PathVariable String id) {
-        List<FriendRequestDto> requests = userService.getFriendRequests(id);
+    @GetMapping("/{userId}/friend-requests")
+    public ResponseEntity<List<FriendRequestDto>> getFriendRequests(@PathVariable String userId) {
+        List<FriendRequestDto> requests = userService.getFriendRequests(userId);
         return ResponseEntity.ok(requests);
     }
 
-    @PostMapping("/{id}/contacts")
-    public ResponseEntity<Void> addContact(@PathVariable String id,
+    @PostMapping("/{userId}/contacts")
+    public ResponseEntity<Void> addContact(@PathVariable String userId,
                                            @RequestParam String friendId,
                                            @RequestParam String nickname) {
-        userService.addContact(id, friendId, nickname);
+        userService.addContact(userId, friendId, nickname);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{id}/friend-requests")
-    public ResponseEntity<Void> sendFriendRequest(@PathVariable String id,
+    @PostMapping("/{userId}/friend-requests")
+    public ResponseEntity<Void> sendFriendRequest(@PathVariable String userId,
                                                   @RequestParam String toUserId) {
-        userService.sendFriendRequest(id, toUserId);
+        userService.sendFriendRequest(userId, toUserId);
         return ResponseEntity.ok().build();
     }
 }

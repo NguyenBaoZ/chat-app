@@ -15,7 +15,7 @@ import java.util.Date;
 public class Contact {
 
     @Id
-    private String id;                  
+    private String contactId;                  
 
     private String ownerId;            
 
@@ -28,11 +28,11 @@ public class Contact {
     private Date createdAt;
 
     // getters and setters
-    public String getId() {
-        return id;
+    public String getContactId() {
+        return contactId;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
     public String getOwnerId() {
         return ownerId;
