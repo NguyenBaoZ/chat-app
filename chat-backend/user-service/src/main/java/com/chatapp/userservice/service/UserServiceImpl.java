@@ -9,10 +9,8 @@ import com.chatapp.userservice.model.FriendRequest;
 import com.chatapp.userservice.repository.UserRepository;
 import com.chatapp.userservice.repository.ContactRepository;
 import com.chatapp.userservice.repository.FriendRequestRepository;
-import com.chatapp.userservice.service.UserService;
 import com.chatapp.userservice.mapper.FriendRequestMapper;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

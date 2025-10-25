@@ -10,8 +10,10 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>api-gateway</module>
+    <module>common-event</module>
     <module>auth-service</module>
+    <module>user-service</module>
+    <module>api-gateway</module>
     <module>discovery-service</module>
     <module>file-service</module>
     <module>group-service</module>
@@ -19,7 +21,6 @@
     <module>notification-service</module>
     <module>realtime-gateway</module>
     <module>statistic-service</module>
-    <module>user-service</module>
   </modules>
 
   <parent>

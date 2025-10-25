@@ -17,7 +17,6 @@ public class JwtAuthGatewayFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
 
-        // 🚫 Bỏ qua xác thực cho Swagger & API docs
         if (path.contains("/v3/api-docs") ||
             path.contains("/swagger-ui") ||
             path.contains("/swagger-resources") ||
@@ -39,7 +38,6 @@ public class JwtAuthGatewayFilter implements GatewayFilter {
                     .parseClaimsJws(token)
                     .getBody();
 
-            // Nếu cần: thêm userId vào header cho downstream services
             exchange = exchange.mutate()
                     .request(exchange.getRequest().mutate()
                             .header("X-User-Id", claims.getSubject())

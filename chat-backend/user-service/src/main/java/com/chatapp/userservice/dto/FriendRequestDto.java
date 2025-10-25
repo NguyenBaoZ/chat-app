@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class FriendRequestDto {
     private String id;
-    private String fromUserId;  // ID người gửi
-    private String toUserId;    // ID người nhận
+    private String fromUserId;
+    private String toUserId;
     private String status;
     private Date createdAt;
 
@@ -19,7 +19,6 @@ public class FriendRequestDto {
         this.createdAt = createdAt;
     }
 
-    // Getters và Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

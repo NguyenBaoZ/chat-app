@@ -17,7 +17,6 @@ public class ContactDto {
         this.status = status;
     }
 
-    // Getters và Setters
     public String getContactId() { return contactId; }
     public void setContactId(String contactId) { this.contactId = contactId; }
 
