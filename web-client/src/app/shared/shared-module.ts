@@ -14,11 +14,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { List } from './components/list/list';
+import { ListItem } from './components/list/list-item/list-item';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    List,
+    ListItem
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -26,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       extend: true
     }),
     FormsModule,
+    RouterModule,
 
     // Angular Material
     MatCardModule,
@@ -46,6 +53,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     TranslateModule,
     FormsModule,
+    RouterModule,
 
     // Angular Material
     MatCardModule,
@@ -59,7 +67,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatMenuModule,
     MatMenuTrigger,
-    MatTooltipModule
+    MatTooltipModule,
+
+    // Customized Components
+    List,
+    // ListItem
   ]
 })
 export class SharedModule { }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ChatMessage } from '../../../models/chat-message.model';
+import { ChatMessage } from '../../../../shared/models/chat-message.model';
 
 @Component({
   selector: 'app-conversation-window',

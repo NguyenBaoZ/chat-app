@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ChatMessage } from '../../../../models/chat-message.model';
+import { ChatMessage } from '../../../../../shared/models/chat-message.model';
 import { EmojiPicker } from '../../emoji-picker/emoji-picker';
-import { Emoji } from '../../../../models/emoji.model';
+import { Emoji } from '../../../../../shared/models/emoji.model';
 import { reactionEmojis as REACTIONS } from '../../../../../../assets/emoji/emoji';
 
 @Component({

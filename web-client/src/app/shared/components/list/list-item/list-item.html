@@ -1,0 +1,25 @@
+<mat-list-item class="item" [class.selected]="isSelected" (click)="onItemClick()">
+    <div class="item-content">
+        <div *ngIf="item?.usingImage" mat-list-avatar class="item-image">
+            <img *ngIf="item?.image" [src]="item?.image" [alt]="item?.displayName" class="image-content">
+            <div *ngIf="!item?.image" class="image-fallback"
+                [style.background-color]="getRandomColor(item.displayName)">
+                {{ getInitials(item?.displayName) }}
+            </div>
+        </div>
+
+        <div *ngIf="item?.usingIcon" mat-list-avatar class="item-icon">
+            <mat-icon class="icon-content">{{ item?.icon }}</mat-icon>
+        </div>
+
+        <div class="item-info">
+            <div *ngIf="item?.displayName" mat-line class="item-info-primary">{{ item?.displayName }}</div>
+            <div *ngFor="let i of item?.info" mat-line [ngClass]="'item-info-' + (i?.style || 'secondary')">{{ i?.content }}</div>
+        </div>
+
+        <button *ngIf="item?.more" mat-icon-button class="menu-button" (click)="onMenuClick($event)"
+            [attr.aria-label]="'Actions for ' + item.name">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+</mat-list-item>

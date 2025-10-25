@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Emoji } from '../../../../models/emoji.model';
+import { Emoji } from '../../../../../shared/models/emoji.model';
 import { EmojiPicker } from '../../emoji-picker/emoji-picker';
 
 @Component({

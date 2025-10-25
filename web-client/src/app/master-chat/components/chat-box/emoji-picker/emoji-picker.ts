@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Emoji } from '../../../models/emoji.model';
+import { Emoji } from '../../../../shared/models/emoji.model';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { emojiList as EMOJI_LIST, reactionEmojis as REACTION_LIST } from '../../../../../assets/emoji/emoji';
 

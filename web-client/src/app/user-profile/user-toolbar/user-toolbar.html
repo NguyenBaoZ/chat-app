@@ -1,0 +1,43 @@
+<!-- toolbar.component.html -->
+<div class="toolbar-container">
+  <!-- Left Sidebar Toolbar -->
+  <div class="left-toolbar">
+    <!-- User Avatar with Dropdown -->
+    <button 
+      mat-icon-button 
+      class="toolbar-button user-avatar"
+      [matMenuTriggerFor]="userMenu"
+      aria-label="User menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    
+    <mat-menu #userMenu="matMenu" class="user-menu">
+      <button mat-menu-item (click)="openProfile()">
+        <mat-icon>person</mat-icon>
+        <span>Open your profile</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Log out</span>
+      </button>
+    </mat-menu>
+
+    <!-- Messages Icon -->
+    <button 
+      mat-icon-button 
+      class="toolbar-button"
+      (click)="navigateToChat()"
+      aria-label="Messages">
+      <mat-icon>message</mat-icon>
+    </button>
+
+    <!-- Contacts Icon -->
+    <button 
+      mat-icon-button 
+      class="toolbar-button"
+      (click)="navigateToContacts()"
+      aria-label="Contacts">
+      <mat-icon>contacts</mat-icon>
+    </button>
+  </div>
+</div>
