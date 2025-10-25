@@ -29,16 +29,9 @@ public class GatewayConfig {
                 //                        .filter(jwtFilter))
                 //         .uri("lb://group-service"))
 
-                .route("auth-service-no-jwt", r -> r.path("/api/auth/login", "/api/auth/register")
+                .route("auth-service", r -> r.path("/api/auth/login", "/api/auth/register")
                         .filters(f -> f
                                 .rewritePath("/api/auth/(?<segment>.*)", "/${segment}"))
-                        .uri("lb://auth-service"))
-
-                .route("auth-service-jwt", r -> r.path("/api/auth/**")
-                        .and().not(p -> p.path("/api/auth/login", "/api/auth/register"))
-                        .filters(f -> f
-                                .rewritePath("/api/auth/(?<segment>.*)", "/${segment}")
-                                .filter(jwtFilter))
                         .uri("lb://auth-service"))
 
                 // .route("file-service", r -> r.path("/api/files/**")
