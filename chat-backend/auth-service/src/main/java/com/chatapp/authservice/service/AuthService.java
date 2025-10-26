@@ -8,7 +8,10 @@ import com.chatapp.authservice.model.RefreshToken;
 import com.chatapp.authservice.model.User;
 import com.chatapp.authservice.repository.RefreshTokenRepository;
 import com.chatapp.authservice.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,11 +26,15 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final KafkaTemplate<String, UserCreatedEvent> kafkaTemplate;
 
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
     //constructors
-    public AuthService(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, KafkaTemplate<String, UserCreatedEvent> kafkaTemplate) {
+    public AuthService(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, KafkaTemplate<String, UserCreatedEvent> kafkaTemplate, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.kafkaTemplate = kafkaTemplate;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -40,7 +47,7 @@ public class AuthService {
         user.setUserId(generateUserId());
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRoles(List.of("USER"));
         user.setActive(true);
         user.setCreatedAt(Instant.now());
@@ -68,11 +75,15 @@ public class AuthService {
         return new AuthResponse(UUID.randomUUID().toString(), refresh.getToken());
     }
 
+    public boolean validatePassword(String rawPassword, String hashedPassword) {
+        return passwordEncoder.matches(rawPassword, hashedPassword);
+    }
+
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("Invalid username"));
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!validatePassword(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
@@ -97,6 +108,10 @@ public class AuthService {
         }
 
         return new AuthResponse(UUID.randomUUID().toString(), refresh.getToken());
+    }
+
+    public void logout(String userId) {
+        refreshTokenRepository.deleteByUserId(userId);
     }
 
     private String generateUserId() {
