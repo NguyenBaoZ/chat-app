@@ -3,7 +3,7 @@ package com.chatapp.userservice.controller;
 import com.chatapp.userservice.dto.UserDto;
 import com.chatapp.userservice.dto.ContactDto;
 import com.chatapp.userservice.dto.FriendRequestDto;
-import com.chatapp.userservice.exception.ResourceNotFoundException;
+import com.chatapp.common.exception.ResourceNotFoundException;
 import com.chatapp.userservice.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

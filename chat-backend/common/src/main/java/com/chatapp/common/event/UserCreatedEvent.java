@@ -1,4 +1,4 @@
-package com.chatapp.commonevent;
+package com.chatapp.common.event;
 
 import lombok.Data;
 

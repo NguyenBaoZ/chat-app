@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>common-event</module>
+    <module>common</module>
     <module>auth-service</module>
     <module>user-service</module>
     <module>api-gateway</module>

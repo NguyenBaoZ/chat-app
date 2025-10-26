@@ -1,6 +1,6 @@
 package com.chatapp.userservice.kafka;
 
-import com.chatapp.commonevent.UserCreatedEvent;
+import com.chatapp.common.event.UserCreatedEvent;
 import com.chatapp.userservice.model.User;
 import com.chatapp.userservice.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;

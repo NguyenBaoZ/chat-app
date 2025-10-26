@@ -3,7 +3,7 @@ package com.chatapp.authservice.service;
 import com.chatapp.authservice.dto.AuthResponse;
 import com.chatapp.authservice.dto.LoginRequest;
 import com.chatapp.authservice.dto.RegisterRequest;
-import com.chatapp.commonevent.UserCreatedEvent;
+import com.chatapp.common.event.UserCreatedEvent;
 import com.chatapp.authservice.model.RefreshToken;
 import com.chatapp.authservice.model.User;
 import com.chatapp.authservice.repository.RefreshTokenRepository;
