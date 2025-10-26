@@ -6,9 +6,10 @@ import { App } from './app';
 import { AuthenticationModule } from './authentication/authentication-module';
 import { UserProfileModule } from './user-profile/user-profile-module';
 import { MasterChatModule } from './master-chat/master-chat-module';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MasterPageModule } from './master-page/master-page-module';
 
 export function HttpLoaderFactory() {
   return new TranslateHttpLoader();
@@ -23,7 +24,8 @@ export function HttpLoaderFactory() {
     AppRoutingModule,
     AuthenticationModule,
     UserProfileModule,
-    MasterChatModule,
+    // MasterChatModule,
+    MasterPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -33,6 +35,7 @@ export function HttpLoaderFactory() {
     }),
   ],
   providers: [
+    provideHttpClient(withFetch()),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideClientHydration(withEventReplay()),

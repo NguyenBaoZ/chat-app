@@ -13,7 +13,6 @@ import { HeaderToolbar } from './components/chat-box/message-input/header-toolba
 import { MainInput } from './components/chat-box/message-input/main-input/main-input';
 import { BoxHeader } from './components/chat-box/box-header/box-header';
 import { EmojiPicker } from './components/chat-box/emoji-picker/emoji-picker';
-
 @NgModule({
   declarations: [
     MasterChatOutlet,

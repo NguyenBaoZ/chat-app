@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { throwError, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { Store } from '@ngrx/store';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +8,7 @@ import { Store } from '@ngrx/store';
 export class RestService {
     private restApiServer = environment.apiUrl
 
-    constructor(private httpClient: HttpClient, private store: Store) {
-
-    }
+    constructor(private httpClient: HttpClient) {}
 
     public sendGetRequest(urn: any, getParams = {} as any, externalConfig = {} as any, autoLogin = false, ignoreLogin = false as any) {
         const options = externalConfig;

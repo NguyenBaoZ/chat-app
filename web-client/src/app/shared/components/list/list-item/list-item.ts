@@ -1,20 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Contact } from '../../../../shared/models/contact.model';
 
 @Component({
-  selector: 'app-contact-item',
+  selector: 'app-list-item',
   standalone: false,
-  templateUrl: './contact-item.html',
-  styleUrl: './contact-item.scss'
+  templateUrl: './list-item.html',
+  styleUrl: './list-item.scss'
 })
-export class ContactItem {
-  @Input() contact!: Contact;
+export class ListItem {
+  @Input() item!: any;
   @Input() isSelected: boolean = false;
 
-  @Output() contactSelected = new EventEmitter<Contact>();
-  @Output() menuClicked = new EventEmitter<{ event: Event, contact: Contact }>();
-  @Output() editContact = new EventEmitter<Contact>();
-  @Output() deleteContact = new EventEmitter<Contact>();
+  @Output() itemSelected = new EventEmitter<any>();
+  @Output() menuClicked = new EventEmitter<{ event: Event, item: any }>();
+  @Output() editItem = new EventEmitter<any>();
+  @Output() deleteItem = new EventEmitter<any>();
 
   getInitials(name: string): string {
     return name
@@ -34,26 +33,18 @@ export class ContactItem {
 
     // Generate a consistent color based on the name
     let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
+    for (let i = 0; i < seed?.length; i++) {
       hash = seed.charCodeAt(i) + ((hash << 5) - hash);
     }
     return colors[Math.abs(hash) % colors.length];
   }
 
   onItemClick(): void {
-    this.contactSelected.emit(this.contact);
+    this.itemSelected.emit(this.item);
   }
 
   onMenuClick(event: Event): void {
     event.stopPropagation();
-    this.menuClicked.emit({ event, contact: this.contact });
-  }
-
-  onEdit(): void {
-    this.editContact.emit(this.contact);
-  }
-
-  onDelete(): void {
-    this.deleteContact.emit(this.contact);
+    this.menuClicked.emit({ event, item: this.item });
   }
 }

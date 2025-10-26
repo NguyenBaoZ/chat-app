@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Contact } from '../../models/contact.model';
-import { Router } from '@angular/router';
+import { Contact } from '../../../shared/models/contact.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-list',
@@ -21,7 +21,7 @@ export class ContactList {
   @Input() isLoading: boolean = false;
 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
 
   selectedContact: Contact | null = null;
@@ -30,7 +30,7 @@ export class ContactList {
   onContactSelected(contact: Contact): void {
     this.selectedContact = contact;
     console.log('Selected contact:', contact);
-    this.router.navigate(['/chat', contact.id]);
+    this.router.navigate([contact.id], { relativeTo: this.route });
   }
 
   onMenuClicked(data: { event: Event, contact: Contact }): void {
