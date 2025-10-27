@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addContact(String ownerId, String friendId, String nickname) {
         Contact contact = new Contact();
+        contact.setContactId(generateContactId());
         contact.setOwnerId(ownerId);
         contact.setFriendId(friendId);
         contact.setNickname(nickname);
@@ -90,5 +91,10 @@ public class UserServiceImpl implements UserService {
         request.setStatus("pending");
         request.setCreatedAt(Date.from(Instant.now()));
         friendRequestRepository.save(request);
+    }
+
+    private String generateContactId() {
+        long count = contactRepository.count() + 1;
+        return String.format("C%04d", count);
     }
 }
