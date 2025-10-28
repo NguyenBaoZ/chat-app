@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../../shared/services/users.servive';
 
 @Component({
   selector: 'app-master-chat-outlet',
@@ -8,11 +7,9 @@ import { UsersService } from '../../../shared/services/users.servive';
   styleUrl: './master-chat-outlet.scss'
 })
 export class MasterChatOutlet implements OnInit{
-  constructor(private userService: UsersService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.userService.getContactsList().subscribe(contacts => {
-      console.log('Contacts:', contacts);
-    });
+
   }
 }

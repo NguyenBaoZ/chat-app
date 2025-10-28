@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MasterContactOutlet } from './components/master-contact-outlet/master-contact-outlet';
-import { ContactList } from './components/contact-list/contact-list';
+import { FriendList } from './components/friend-list/friend-list';
 
 
 const routes: Routes = [
@@ -10,11 +10,10 @@ const routes: Routes = [
     component: MasterContactOutlet,
     children: [
       { path: '', redirectTo: 'friend-list', pathMatch: 'full' },
-      { path: 'friend-list', component: ContactList },
-      { path: 'groups', component: ContactList },
-      { path: 'friend-requests', component: ContactList },
-      { path: 'group-invitations', component: ContactList },
-      // { path: ':contactId', component: ChatBox },
+      { path: 'friend-list', component: FriendList },
+      { path: 'groups', component: FriendList },
+      { path: 'friend-requests', component: FriendList },
+      { path: 'group-invitations', component: FriendList },
     ]
   }
 ];

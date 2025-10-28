@@ -71,7 +71,7 @@ import { ListItem } from './components/list/list-item/list-item';
 
     // Customized Components
     List,
-    // ListItem
+    ListItem
   ]
 })
 export class SharedModule { }

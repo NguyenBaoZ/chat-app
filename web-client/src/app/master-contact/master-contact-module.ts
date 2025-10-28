@@ -4,7 +4,7 @@ import { MasterContactOutlet } from './components/master-contact-outlet/master-c
 import { MasterContactRoutingModule } from './master-contact-routing.module';
 import { ContactMenu } from './components/contact-menu/contact-menu';
 import { SharedModule } from '../shared/shared-module';
-import { ContactList } from './components/contact-list/contact-list';
+import { FriendList } from './components/friend-list/friend-list';
 
 
 
@@ -12,7 +12,7 @@ import { ContactList } from './components/contact-list/contact-list';
   declarations: [
     MasterContactOutlet,
     ContactMenu,
-    ContactList
+    FriendList
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,8 @@
+<div class="header">
+    <app-list-item [item]="headerItem"></app-list-item>
+</div>
+
+<div class="main-list-wrapper">
+    <app-list #contactMenu id="friend-list" [items]="friends" title="Friends" [itemButtons]="itemButtons"
+        (itemSelected)="onMenuItemSelected($event)"></app-list>
+</div>

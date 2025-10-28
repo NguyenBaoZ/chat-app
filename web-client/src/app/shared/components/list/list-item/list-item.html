@@ -14,12 +14,19 @@
 
         <div class="item-info">
             <div *ngIf="item?.displayName" mat-line class="item-info-primary">{{ item?.displayName }}</div>
-            <div *ngFor="let i of item?.info" mat-line [ngClass]="'item-info-' + (i?.style || 'secondary')">{{ i?.content }}</div>
+            <div *ngFor="let i of item?.info" mat-line [ngClass]="'item-info-' + (i?.style || 'secondary')">{{
+                i?.content }}</div>
         </div>
-
-        <button *ngIf="item?.more" mat-icon-button class="menu-button" (click)="onMenuClick($event)"
-            [attr.aria-label]="'Actions for ' + item.name">
+        <button *ngIf="!!buttons && buttons?.length > 0" [matMenuTriggerFor]="moreMenu" mat-icon-button
+            class="more-button" [attr.aria-label]="'Actions for ' + item.name" (click)="$event.stopPropagation()">
             <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #moreMenu="matMenu" class="more-menu">
+            <div class="item-button-container">
+                <button mat-button *ngFor="let btn of buttons" (click)="onItemButtonClick(btn)" class="item-btn">
+                    {{ btn?.displayName }}
+                </button>
+            </div>
+        </mat-menu>
     </div>
 </mat-list-item>

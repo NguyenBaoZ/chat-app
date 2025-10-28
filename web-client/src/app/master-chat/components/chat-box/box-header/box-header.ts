@@ -9,8 +9,7 @@ import { Component } from '@angular/core';
 export class BoxHeader {
   public contact = {
     id: '1',
-    name: 'NA',
-    // avatarUrl: 'https://example.com/avatar1.png',
-    email: ''
+    displayName: 'NA',
+    usingImage: true
   }
 }

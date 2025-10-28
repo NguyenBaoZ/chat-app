@@ -1,7 +1,7 @@
 :host {
     display: flex;
     min-height: 100vh;
-    min-width: 100vw;
+    width: calc(100vw - 80px);
 
     .contact-menu-wrapper {
         width: 20vw;

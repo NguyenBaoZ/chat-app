@@ -4,7 +4,6 @@ import { MasterChatOutlet } from './components/master-chat-outlet/master-chat-ou
 import { ChatBox } from './components/chat-box/chat-box';
 import { MasterChatRoutingModule } from './master-chat-routing.module';
 import { ContactList } from './components/contact-list/contact-list';
-import { ContactItem } from './components/contact-list/contact-item/contact-item';
 import { DefaultWelcome } from './components/default-welcome/default-welcome';
 import { ConversationWindow } from './components/chat-box/conversation-window/conversation-window';
 import { MessageInput } from './components/chat-box/message-input/message-input';
@@ -18,7 +17,6 @@ import { EmojiPicker } from './components/chat-box/emoji-picker/emoji-picker';
     MasterChatOutlet,
     ChatBox,
     ContactList,
-    ContactItem,
     DefaultWelcome,
     ConversationWindow,
     MessageInput,
@@ -36,7 +34,6 @@ import { EmojiPicker } from './components/chat-box/emoji-picker/emoji-picker';
     MasterChatOutlet,
     ChatBox,
     ContactList,
-    ContactItem,
     DefaultWelcome,
     ConversationWindow,
     MessageInput,
@@ -44,7 +41,7 @@ import { EmojiPicker } from './components/chat-box/emoji-picker/emoji-picker';
     HeaderToolbar,
     MainInput,
     BoxHeader,
-    EmojiPicker
+    EmojiPicker,
   ]
 })
 export class MasterChatModule { }

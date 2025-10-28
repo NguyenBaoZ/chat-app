@@ -1,26 +1,44 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UsersService } from '../../../shared/services/users.servive';
 import { ListActions } from '../../../state/list.actions';
+import { CONTACT_MENU_CONSTANTS } from '../contact-menu/contact-menu.constants';
+import { CONTACT_MENU_ITEM } from '../contact-menu/contact-menu.enum';
 
 @Component({
-  selector: 'app-chat-bot-contact-list',
+  selector: 'app-friend-list',
   standalone: false,
-  templateUrl: './contact-list.html',
-  styleUrl: './contact-list.scss'
+  templateUrl: './friend-list.html',
+  styleUrl: './friend-list.scss'
 })
-export class ContactList {
-  public id = 'chatroom-list';
-  public chatrooms = [] as any;
+export class FriendList {
+  public id = 'friend-list';
+  public friends = [] as any;
   public selectedMenuItem: any;
+  public headerItem: any;
+  public itemButtons = [
+    {
+      displayName: 'Open Profile',
+      onClick: (e: any) => {
+        console.log('Open Profile', e)
+      }
+    },
+    {
+      displayName: 'Unfriend',
+      onClick: (e: any) => {
+        console.log('Unfriend', e)
+      }
+    }
+  ] as any;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: Store, private userService: UsersService) { }
 
   ngOnInit(): void {
+    this.headerItem = CONTACT_MENU_CONSTANTS.DEFAULT_ITEMS[CONTACT_MENU_ITEM.FRIEND_LIST]
     this.userService.getContactsList().subscribe({
       next: (contacts: any) => {
-        console.log('Chatroom List get:', contacts);
+        console.log('Friendlist get:', contacts);
         this.store.dispatch(ListActions.setItems({
           listId: this.id,
           items: contacts?.map((contact: any) => ({
@@ -32,10 +50,6 @@ export class ContactList {
           )
         }))
       }
-    })
-
-    this.route.firstChild?.paramMap.subscribe((params: ParamMap) => {
-      this.store.dispatch(ListActions.setSelectedItems({ listId: this.id, itemId: params.get('contactId') ?? 'default' }))
     })
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-list-item',
@@ -6,14 +6,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './list-item.html',
   styleUrl: './list-item.scss'
 })
-export class ListItem {
+export class ListItem implements OnInit {
   @Input() item!: any;
   @Input() isSelected: boolean = false;
+  @Input() buttons: any = [];
 
   @Output() itemSelected = new EventEmitter<any>();
   @Output() menuClicked = new EventEmitter<{ event: Event, item: any }>();
   @Output() editItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
+
+  ngOnInit(): void {
+    console.log('itemlist',this.buttons)
+  }
 
   getInitials(name: string): string {
     return name
@@ -46,5 +51,10 @@ export class ListItem {
   onMenuClick(event: Event): void {
     event.stopPropagation();
     this.menuClicked.emit({ event, item: this.item });
+  }
+
+  onItemButtonClick(event: any) {
+    if (!event?.onClick) return;
+    event.onClick(this.item)
   }
 }

@@ -105,8 +105,28 @@
         }
     }
 
-    .menu-button {
-        opacity: 0;
+    .more-button {
         transition: opacity 0.2s ease;
+    }
+}
+
+::ng-deep .item-button-container {
+    display: flex;
+    flex-direction: column;
+
+    .item-btn {
+        display: block;
+        width: 100%;
+        padding: 8px 16px;
+        border: none;
+        background: none;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        border-radius: 0px;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
     }
 }
