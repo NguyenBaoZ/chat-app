@@ -3,6 +3,9 @@ package com.chatapp.userservice.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +16,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
+    @Id
+    private ObjectId id;
 
     @Indexed(unique = true)
     private String userId;                   
@@ -31,9 +37,18 @@ public class User {
 
     private Date createdAt;              
 
-    private Date lastActiveAt;           
+    private Date lastActiveAt;
+
+    private boolean isActive = true;
 
     // getters and setters
+    public ObjectId getId() {
+        return id;
+    }
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -88,4 +103,7 @@ public class User {
     public void setLastActiveAt(Date lastActiveAt) {
         this.lastActiveAt = lastActiveAt;
     }
+
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean isActive) { this.isActive = isActive; }
 }

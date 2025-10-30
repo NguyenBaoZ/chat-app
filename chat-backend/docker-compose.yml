@@ -14,6 +14,25 @@ services:
     networks:
       - chat-network
 
+  # === REDIS ===
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    mem_limit: 256m
+    cpus: 0.3
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - chat-network
+  
   api-gateway:
     image: chat-api-gateway
     build:
@@ -28,6 +47,7 @@ services:
       - "8080:8080"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - SPRING_DATA_REDIS_HOST=redis
     networks:
       - chat-network
 
@@ -144,9 +164,7 @@ services:
     build:
       context: ./realtime-gateway
       dockerfile: Dockerfile
-    container_name: realtime-gateway
-    depends_on:
-      - discovery-service
+    container_name: realtime-gateway  
     mem_limit: 512m
     cpus: 0.5
     ports:
@@ -179,18 +197,12 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
     networks:
       - chat-network
 
   kafka:
     image: confluentinc/cp-kafka:7.4.0
     container_name: kafka
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -203,16 +215,11 @@ services:
   mongo:
     image: mongo:7.0
     container_name: mongo
-    mem_limit: 512m
-    cpus: 0.5
-    ports:
-      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: 1password123
     volumes:
       - mongo_data:/data/db
-      - ./chat-mongo-init:/docker-entrypoint-initdb.d
     networks:
       - chat-network
 
@@ -222,4 +229,7 @@ networks:
 
 volumes:
   mongo_data:
+    driver: local
+
+  redis_data:
     driver: local

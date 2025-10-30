@@ -14,7 +14,8 @@ public class ContactMapper {
                 contact.getOwnerId(),
                 contact.getFriendId(),
                 contact.getNickname(),
-                contact.getStatus()
+                contact.getStatus(),
+                contact.isActive()
         );
     }
 
@@ -26,6 +27,7 @@ public class ContactMapper {
         contact.setFriendId(dto.getFriendId());
         contact.setNickname(dto.getNickname());
         contact.setStatus(dto.getStatus());
+        contact.setActive(dto.isActive());
         return contact;
     }
 }

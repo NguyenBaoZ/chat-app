@@ -2,6 +2,7 @@ package com.chatapp.userservice.dto;
 
 import java.util.Date;
 
+
 public class UserDto {
     private String userId;
     private String username;
@@ -12,11 +13,12 @@ public class UserDto {
     private String bio;
     private Date createdAt;
     private Date lastActiveAt;
+    private boolean isActive;
 
     public UserDto() {}
 
     public UserDto(String userId, String username, String displayName, String email,
-                   String avatar, String status, String bio, Date createdAt, Date lastActiveAt) {
+                   String avatar, String status, String bio, Date createdAt, Date lastActiveAt, boolean isActive) {
         this.userId = userId;
         this.username = username;
         this.displayName = displayName;
@@ -26,6 +28,7 @@ public class UserDto {
         this.bio = bio;
         this.createdAt = createdAt;
         this.lastActiveAt = lastActiveAt;
+        this.isActive = isActive;
     }
 
     public String getUserId() { return userId; }
@@ -54,4 +57,7 @@ public class UserDto {
 
     public Date getLastActiveAt() { return lastActiveAt; }
     public void setLastActiveAt(Date lastActiveAt) { this.lastActiveAt = lastActiveAt; }
+
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean  isActive) { this.isActive = isActive; }
 }

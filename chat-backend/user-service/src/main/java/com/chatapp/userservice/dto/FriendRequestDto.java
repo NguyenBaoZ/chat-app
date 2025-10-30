@@ -3,24 +3,26 @@ package com.chatapp.userservice.dto;
 import java.util.Date;
 
 public class FriendRequestDto {
-    private String id;
+    private String requestId;
     private String fromUserId;
     private String toUserId;
     private String status;
     private Date createdAt;
+    private boolean isActive;
 
     public FriendRequestDto() {}
 
-    public FriendRequestDto(String id, String fromUserId, String toUserId, String status, Date createdAt) {
-        this.id = id;
+    public FriendRequestDto(String requestId, String fromUserId, String toUserId, String status, Date createdAt, boolean isActive) {
+        this.requestId = requestId;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.status = status;
         this.createdAt = createdAt;
+        this.isActive = isActive;
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getRequestId() { return requestId; }
+    public void setRequestId(String requestId) { this.requestId = requestId; }
 
     public String getFromUserId() { return fromUserId; }
     public void setFromUserId(String fromUserId) { this.fromUserId = fromUserId; }
@@ -33,4 +35,7 @@ public class FriendRequestDto {
 
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean isActive) { this.isActive = isActive; }
 }

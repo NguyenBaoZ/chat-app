@@ -3,7 +3,10 @@ package com.chatapp.userservice.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -15,7 +18,10 @@ import java.util.Date;
 public class FriendRequest {
 
     @Id
-    private String id;                  
+    private ObjectId id;
+
+    @Indexed(unique = true)
+    private String requestId;                                  
 
     private String fromUserId;          
 
@@ -25,15 +31,22 @@ public class FriendRequest {
 
     private Date createdAt;
 
-    private Date updatedAt;
+    private boolean isActive = true;
 
     // getters and setters
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
-
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
+    }
+    
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 
     public String getFromUserId() {
@@ -68,11 +81,7 @@ public class FriendRequest {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean isActive) { this.isActive = isActive; }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
