@@ -1,0 +1,195 @@
+làm 1 app giống Web Angular Mobile Java 
+Authentication & Authorization " 
+- Login/log out 
+- Authorizing (Admin | normal user)" 
+MongoDB, Java User Service " 
+- Quản lý thông tin người dùng 
+- Tìm kiếm bạn bè 
+- Quản lý danh bạ 
+- Profile management" MongoDB, Java Group Service "
+- Quản lý nhóm chat 
+- Thành viên nhóm 
+- Tạo/Bỏ nhóm" MongoDB, Java Message Service "
+- Xử lý tin nhắn 1-1 và nhóm 
+- Lưu trữ tin nhắn 
+- Real-time messaging" 
+MongoDB, Java File Service " 
+- Upload, Download, Store file (image, video, document, emote)" 
+MongoDB, Java Statistic Service " 
+- Thu thập dữ liệu người dùng 
+ Thống kê hoạt động" 
+ MongoDB, Java Notification Service 
+ - Thông báo tin nhắn đến (?) Api Gateway Routing requests đến các service tương ứng
+
+chat-app/
+├── README.md
+├── .gitignore
+├── docker-compose.yml              # môi trường dev: mongo, redis, kafka, zookeeper, minio, ...
+├── k8s/                            # manifests helm/kustomize cho production
+│   ├── gateway/
+│   ├── message-service/
+│   ├── realtime-gateway/
+│   └── ...
+├── infra/                          # hạ tầng
+│   ├── kafka/
+│   │   ├── docker-compose.override.yml
+│   │   └── config/
+│   ├── mongo/
+│   │   └── init.js
+│   ├── redis/
+│   ├── minio/
+│   └── monitoring/                 # prometheus, grafana, ELK
+├── ci-cd/
+│   ├── github-actions/             # workflows CI/CD (build, test, deploy)
+│   │   ├── build.yml
+│   │   └── deploy.yml
+│   └── gitlab-ci/
+│       └── .gitlab-ci.yml
+├── api-gateway/                    # Spring Cloud Gateway hoặc Kong config
+│   ├── src/
+│   ├── pom.xml
+│   ├── Dockerfile
+│   └── helm-chart/
+├── auth-service/                   # Java Spring Boot
+│   ├── src/main/java/com/chat/auth/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── repository/
+│   │   └── config/
+│   ├── src/main/resources/
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── user-service/
+│   ├── src/main/java/com/chat/user/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── repository/
+│   │   └── dto/
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── group-service/
+│   ├── src/main/java/com/chat/group/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── repository/
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── message-service/
+│   ├── src/main/java/com/chat/message/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   │   ├── handler/            # strategy pattern (text, image…)
+│   │   ├── repository/
+│   │   └── kafka/
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── file-service/
+│   ├── src/main/java/com/chat/file/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── repository/
+│   │   └── storage/                # S3/MinIO integration
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── notification-service/
+│   ├── src/main/java/com/chat/notification/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   └── push/                   # FCM, WebPush adapters
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── statistic-service/
+│   ├── src/main/java/com/chat/statistic/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   └── repository/
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── helm-chart/
+├── realtime-gateway/               # Node.js + socket.io
+│   ├── src/
+│   │   ├── index.js
+│   │   ├── socket/
+│   │   │   ├── handlers/
+│   │   │   │   ├── messageHandler.js
+│   │   │   │   └── presenceHandler.js
+│   │   │   └── middleware/auth.js
+│   │   ├── kafka/
+│   │   │   ├── producer.js
+│   │   │   └── consumer.js
+│   │   ├── redis/
+│   │   │   └── client.js
+│   │   └── utils/
+│   ├── package.json
+│   ├── Dockerfile
+│   └── helm-chart/
+├── web-client/                     # Angular app
+│   ├── src/
+│   ├── angular.json
+│   ├── package.json
+│   └── Dockerfile
+└── mobile-client/                  # Android Java app
+    ├── app/
+    │   ├── src/
+    │   │   ├── main/java/com/chat/mobile/
+    │   │   │   ├── ui/
+    │   │   │   ├── network/
+    │   │   │   ├── auth/
+    │   │   │   └── service/
+    │   └── res/
+    ├── build.gradle
+    └── Dockerfile (optional, để build CI)
+
+
+API need to do:
+auth service:
+ - login, logout, register (call api to user-service to create user): done
+ - get refresh-token to mark sure login is acceptable: minor
+
+auth service:
+ - delete user (by deactive them) 
+
+user service:
+ - get user: test-again 
+ - get, post contacts: test-again
+ - get friend-requests: test-again
+ - post friend-requests: test-again
+ - accept-friends: post friend-requests (change status to accept) and send kafka message to group service to create new group of 2 persons (create 1 group and group member record for each member): need to implement from group service listener to test
+ - delete for user, contact and friend-requests (by deactive them): test-again
+ 
+group-service:
+ - group service listener
+ - create group: create group and group member for each member
+ - modify group: add/delete more member
+ - delete group (by deactive them): minor
+ - get group by userID
+
+message-service:
+ - send message to database
+    - text, emote: save to db (type: text, content)
+    - image: push the image into cloud (drive or something), save to db (type: text, content: location of picture) => file-service
+ - get mesage by (messageId, senderId vs roomID)
+ - delete-messages (by deactive them): minor
+ - message-read: store the message read or not
+ - message-reactions: save the message reaction
+ - need to set up realtime gateway (maybe for socket to handle the message from mobile to make sure the message is real time) => need the time to investigate 
+
+notification-service: ignore because didn't enough effort
+
+cơ chế chính của tôi như này: gửi message của A tới B tức là gửi message đó gới group 1 (chứa A và B) chứ không phải gửi trực tiếp từ A tới B, còn gửi tin nhắn nhóm thì cũng vậy 
+
+accessToken => decode => lấy đc userID
+
+accessToken (1h) → hết hạn
+        ↓
+FE tự động gọi /refresh → dùng refreshToken
+        ↓
+BE kiểm tra refreshToken → trả accessToken mới
+        ↓
+FE cập nhật accessToken → tiếp tục dùng

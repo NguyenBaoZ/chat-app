@@ -1,6 +1,9 @@
 package com.chatapp.authservice.model;
 
 import lombok.*;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class User {
 
+    @Id
+    private ObjectId id;
     @Indexed(unique = true)
     private String userId;
     private String username;
@@ -24,6 +29,13 @@ public class User {
     private Instant createdAt;
     private Instant updatedAt;
 
+    // getters and setters
+    public ObjectId getId() {
+        return id;
+    }
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
     public String getUserId() {
         return userId;
     }

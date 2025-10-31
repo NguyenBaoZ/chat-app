@@ -1,7 +1,10 @@
 package com.chatapp.authservice.model;
 
 import lombok.*;
+
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -13,7 +16,8 @@ import java.time.Instant;
 @AllArgsConstructor
 public class RefreshToken {
     @Id
-    private String id;
+    private ObjectId id;
+    @Indexed(unique = true)
     private String tokenId;
     private String userId;
     private String token;
@@ -21,11 +25,11 @@ public class RefreshToken {
     private Instant createdAt;
 
     // getters and setters
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

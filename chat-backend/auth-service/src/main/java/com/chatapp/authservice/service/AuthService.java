@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -29,12 +31,15 @@ public class AuthService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtService jwtService;
+
     //constructors
-    public AuthService(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, KafkaTemplate<String, UserCreatedEvent> kafkaTemplate, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, KafkaTemplate<String, UserCreatedEvent> kafkaTemplate, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.kafkaTemplate = kafkaTemplate;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;   
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -63,16 +68,10 @@ public class AuthService {
         System.out.println("Sending Kafka message: " + event);
         kafkaTemplate.send("user-created-topic", event);
 
-        RefreshToken refresh = new RefreshToken();
-        refresh.setTokenId(generateRefreshTokenId());
-        refresh.setUserId(user.getUserId());
-        refresh.setToken(UUID.randomUUID().toString());
-        refresh.setCreatedAt(Instant.now());
-        refresh.setExpiresAt(Instant.now().plusSeconds(7 * 24 * 60 * 60)); // 7 ngày
+        String accessToken = jwtService.generateToken(user.getUserId());
+        RefreshToken refreshToken = createRefreshToken(user);
 
-        refreshTokenRepository.save(refresh);
-
-        return new AuthResponse(UUID.randomUUID().toString(), refresh.getToken());
+        return new AuthResponse(accessToken, refreshToken.getToken());
     }
 
     public boolean validatePassword(String rawPassword, String hashedPassword) {
@@ -87,27 +86,26 @@ public class AuthService {
             throw new RuntimeException("Invalid password");
         }
 
-        RefreshToken refresh = new RefreshToken();
-        refresh.setTokenId(generateRefreshTokenId());
-        refresh.setUserId(user.getUserId());
-        refresh.setToken(UUID.randomUUID().toString());
-        refresh.setCreatedAt(Instant.now());
-        refresh.setExpiresAt(Instant.now().plusSeconds(7 * 24 * 60 * 60));
+        refreshTokenRepository.deleteByUserId(user.getUserId());
 
-        refreshTokenRepository.save(refresh);
+        String accessToken = jwtService.generateToken(user.getUserId());
+        RefreshToken refreshToken = createRefreshToken(user);
 
-        return new AuthResponse(UUID.randomUUID().toString(), refresh.getToken());
+        return new AuthResponse(accessToken, refreshToken.getToken());
     }
 
     public AuthResponse refreshToken(String token) {
-        RefreshToken refresh = refreshTokenRepository.findByToken(token)
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
                 .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
 
-        if (refresh.getExpiresAt().isBefore(Instant.now())) {
+        if (refreshToken.getExpiresAt().isBefore(Instant.now())) {
+            refreshTokenRepository.delete(refreshToken);
             throw new RuntimeException("Refresh token expired");
         }
 
-        return new AuthResponse(UUID.randomUUID().toString(), refresh.getToken());
+        refreshTokenRepository.delete(refreshToken);
+        String newAccessToken = jwtService.generateToken(refreshToken.getUserId());
+        return new AuthResponse(newAccessToken, refreshToken.getToken());
     }
 
     public void logout(String userId) {
@@ -115,12 +113,21 @@ public class AuthService {
     }
 
     private String generateUserId() {
-        long count = userRepository.count() + 1;
-        return String.format("U%04d", count);
+        return "U" + UUID.randomUUID().toString().substring(0, 8);
     }
 
     private String generateRefreshTokenId() {
-        long count = refreshTokenRepository.count() + 1;
-        return String.format("RT%04d", count);
+        return "RT" + UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    private RefreshToken createRefreshToken(User user) {
+        RefreshToken refresh = new RefreshToken();
+        refresh.setTokenId(generateRefreshTokenId());
+        refresh.setUserId(user.getUserId());
+        refresh.setToken(UUID.randomUUID().toString());
+        refresh.setCreatedAt(Instant.now());
+        refresh.setExpiresAt(Instant.now().plusSeconds(7 * 24 * 60 * 60));
+
+        return refreshTokenRepository.save(refresh);
     }
 }

@@ -75,6 +75,14 @@
         <version>2.6.0</version>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.chatapp</groupId>
       <artifactId>common</artifactId>
       <version>1.0-SNAPSHOT</version>
