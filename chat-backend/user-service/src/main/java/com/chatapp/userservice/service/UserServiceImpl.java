@@ -1,7 +1,7 @@
 package com.chatapp.userservice.service;
 
 import com.chatapp.userservice.dto.UserDto;
-import com.chatapp.common.event.FriendAcceptedEvent;
+import com.chatapp.common.event.GroupCreatedEvent;
 import com.chatapp.common.exception.ResourceNotFoundException;
 import com.chatapp.userservice.dto.ContactDto;
 import com.chatapp.userservice.dto.FriendRequestDto;
@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ContactRepository contactRepository;
     private final FriendRequestRepository friendRequestRepository;
-    private final KafkaTemplate<String, FriendAcceptedEvent> kafkaTemplate;
+    private final KafkaTemplate<String, GroupCreatedEvent> kafkaTemplate;
 
-    public UserServiceImpl(UserRepository userRepository, ContactRepository contactRepository, FriendRequestRepository friendRequestRepository, KafkaTemplate<String, FriendAcceptedEvent> kafkaTemplate) {
+    public UserServiceImpl(UserRepository userRepository, ContactRepository contactRepository, FriendRequestRepository friendRequestRepository, KafkaTemplate<String, GroupCreatedEvent> kafkaTemplate) {
         this.userRepository = userRepository;
         this.contactRepository = contactRepository;
         this.friendRequestRepository = friendRequestRepository;
@@ -160,28 +160,32 @@ public class UserServiceImpl implements UserService {
         if (!fr.getToUserId().equals(accepterId)) {
             throw new RuntimeException("Not authorized to accept this request");
         }
+        
+        System.out.println("Accepting friend request: " + fr);
+        System.out.println("From userId: " + fr.getFromUserId() + ", To userId: " + fr.getToUserId());
+        User fromUser = userRepository.findByUserIdAndIsActiveTrue(fr.getFromUserId())
+        .orElseThrow(() -> new RuntimeException("From user not found"));
+        User toUser = userRepository.findByUserIdAndIsActiveTrue(fr.getToUserId())
+        .orElseThrow(() -> new RuntimeException("To user not found"));
+        
         fr.setStatus("accepted");
         friendRequestRepository.save(fr);
-
         // create mutual contacts
-        addContact(fr.getFromUserId(), fr.getToUserId(), "");
-        addContact(fr.getToUserId(), fr.getFromUserId(), "");
+        addContact(fr.getFromUserId(), fr.getToUserId(), fromUser.getDisplayName());
+        addContact(fr.getToUserId(), fr.getFromUserId(), toUser.getDisplayName());
 
         // publish event to Kafka for group service to create 1-on-1 group
-        FriendAcceptedEvent event = new FriendAcceptedEvent(
+        GroupCreatedEvent event = new GroupCreatedEvent(
+                generateRoomId(),
                 fr.getFromUserId(),
                 fr.getToUserId(),
+                fromUser.getUsername(),
+                toUser.getUsername(),
                 Instant.now()
         );
+
         System.out.println("Sending Kafka message: " + event);
-        TransactionSynchronizationManager.registerSynchronization(
-        new TransactionSynchronization() {
-            @Override
-            public void afterCommit() {
-                kafkaTemplate.send("friend-accepted-topic", event);
-            }
-        }
-    );
+        kafkaTemplate.send("group-created-topic", event);
     }
 
     public List<UserDto> searchUsers(String keyword, String currentUserId) {
@@ -209,5 +213,9 @@ public class UserServiceImpl implements UserService {
 
     private String generateFriendRequestId() {
         return "FR" + UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    private String generateRoomId() {
+        return "G" + UUID.randomUUID().toString().substring(0, 8);
     }
 }

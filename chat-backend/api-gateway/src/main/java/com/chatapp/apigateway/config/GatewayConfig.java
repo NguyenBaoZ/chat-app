@@ -49,10 +49,23 @@ public class GatewayConfig {
                 //                        .filter(jwtFilter))
                 //         .uri("lb://message-service"))
 
-                // .route("group-service", r -> r.path("/api/groups/**")
-                //         .filters(f -> f.stripPrefix(2)
-                //                        .filter(jwtFilter))
-                //         .uri("lb://group-service"))
+                .route("group-service", r -> r.path("/api/groups/**")
+                        .filters(f -> f
+                                .rewritePath("/api/groups/(?<segment>.*)", "/${segment}")
+                                // 1. Circuit Breaker
+                                .circuitBreaker(config -> config
+                                    .setName("group-service-cb")
+                                    .setFallbackUri("forward:/fallback/group"))
+
+                                // 2. Rate Limiter (Redis)
+                                .requestRateLimiter(config -> config
+                                    .setRateLimiter(redisRateLimiter())
+                                    .setKeyResolver(ipKeyResolver()))
+
+                                // 3. Timeout
+                                .filter(timeoutFilter.apply(c -> c.setTimeoutSeconds(5)))
+                                )
+                        .uri("lb://group-service"))
 
                 .route("auth-service", r -> r.path("/api/auth/**")
                         .filters(f -> f

@@ -21,7 +21,7 @@ public class UserEventListener {
         this.userRepository = userRepository;
     }
 
-    @KafkaListener(topics = "user-created-topic", groupId = "user-service-group")
+    @KafkaListener(topics = "group-created-topic", groupId = "group-service-group")
     public void handleUserCreated(UserCreatedEvent event) {
         System.out.println("📥 Received new user: " + event.getUsername());
 

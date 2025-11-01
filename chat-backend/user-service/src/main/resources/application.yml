@@ -25,3 +25,11 @@ eureka:
     service-url:
       defaultZone: http://discovery-service:8761/eureka/
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
+  packages-to-scan: com.chatapp.userservice
+  paths-to-match: /api/**
+
